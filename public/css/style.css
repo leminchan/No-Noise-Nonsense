@@ -1,0 +1,86 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 90%;
+  padding: 5%;
+  margin: 0;
+  text-align: center;
+}
+
+.flexHeader {
+  text-align: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+a {
+  color: #00B7FF;
+}
+
+body select {
+  padding: 10px 70px 10px 13px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e3e3e3;
+  border-radius: 3px;
+  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;
+  background-color: #fff;
+  color: #444444;
+  line-height: 16px;
+  appearance: none;
+  /* this is must */ -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* body select.select_box option */
+body select option {
+  padding: 0 4px;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #f28a30;
+  width: 100%;
+  padding: 15px 15px;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.title {
+  font-family: Roboto, sans-serif;
+  font-size: 25px;
+  font-weight: bold
+}
+
+.header a:hover {
+  background-color: #dddddd;
+  color: black;
+}
+
+.header a:active {
+  background-color: lightgrey;
+  color: black;
+}
+
+.header-right {
+  font-family: Roboto, sans-serif;
+  float: right
+}
+
+/* for Edge */
+select::-ms-expand {
+  display: none;
+}
+
+select:disabled::-ms-expand {
+  background: #f60;
+}
