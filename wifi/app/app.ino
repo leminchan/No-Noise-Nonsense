@@ -22,13 +22,6 @@ static char *pass = "";
 
 static int interval = INTERVAL;
 
-void blinkLED()
-{
-    digitalWrite(LED_PIN, HIGH);
-    delay(500);
-    digitalWrite(LED_PIN, LOW);
-}
-
 void initWifi()
 {
     // Attempt to connect to Wifi network:
@@ -76,7 +69,8 @@ void initTime()
 static IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle;
 void setup()
 {
-    pinMode(LED_PIN, OUTPUT);
+    pinMode(13, OUTPUT);
+    digitalWrite(13, LOW);
 
     initSerial();
     delay(2000);
@@ -102,19 +96,46 @@ void setup()
     IoTHubClient_LL_SetMessageCallback(iotHubClientHandle, receiveMessageCallback, NULL);
     IoTHubClient_LL_SetDeviceMethodCallback(iotHubClientHandle, deviceMethodCallback, NULL);
     IoTHubClient_LL_SetDeviceTwinCallback(iotHubClientHandle, twinCallback, NULL);
+
+    Serial.flush();
 }
 
 static int messageCount = 1;
+bool prevNotify = false;
+bool notify = false;
+
 void loop()
 {
     if (!messagePending && messageSending)
     {
         char messagePayload[MESSAGE_MAX_LEN];
-        bool temperatureAlert = readMessage(messageCount, messagePayload);
-        sendMessage(iotHubClientHandle, messagePayload, temperatureAlert);
+        bool noiseLevelExceeded = readMessage(messageCount, messagePayload);
+
+        if (noiseLevelExceeded) {
+          if (!prevNotify) {
+            notify = true;
+            prevNotify = true;
+          } else {
+            notify = false;
+          }
+        } else {
+          notify = false;
+          prevNotify = false;
+        }
+        
+        sendMessage(iotHubClientHandle, messagePayload, notify);
         messageCount++;
-        delay(interval);
+
+        if (noiseLevelExceeded) {
+          digitalWrite(13, HIGH);
+          delay(interval);
+          digitalWrite(13, LOW);
+          Serial.flush();
+        } else {
+          delay(interval);  
+        }
     }
     IoTHubClient_LL_DoWork(iotHubClientHandle);
     delay(10);
+    Serial.flush();
 }

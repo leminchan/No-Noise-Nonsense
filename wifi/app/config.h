@@ -9,7 +9,7 @@
 #define TEMPERATURE_ALERT 200
 
 // Interval time(ms) for sending message to IoT Hub
-#define INTERVAL 5000
+#define INTERVAL 3000
 
 // If don't have a physical DHT sensor, can send simulated data to IoT hub
 #define SIMULATED_DATA false

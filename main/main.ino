@@ -11,12 +11,14 @@ For Computer Science 141 - Taught by Sergio Gago-Masague
 #define ON HIGH
 #define OFF LOW
 
-#define ONE_SECOND 50 
+#define AVG_TIMER 3000
+#define FIFTY_MS 50 
 #define FIFTEEN_SECONDS 15000
 
 int max_level = 0;
 
-unsigned long one_second_timer;
+unsigned long avg_timer;
+unsigned long fifty_ms_timer;
 unsigned long fifteen_second_timer;
 
 long sound_level_per_sec_avg = 0;
@@ -31,7 +33,7 @@ void setup()
   digitalWrite(BUZZER, OFF);
   Serial.begin(115200);
 
-  one_second_timer = millis() + ONE_SECOND;
+  avg_timer = millis() + AVG_TIMER;
   fifteen_second_timer = millis() + FIFTEEN_SECONDS;
 }
 
@@ -43,12 +45,50 @@ long addToAvg(long value, long avg, long count)
 
 void sendLong(long value) 
 {
-  //Serial.write(int(value) >> 8);    // send the high byte
-  //Serial.write(int(value) & 0xFF);  // send the low byte
+  Serial.write(int(value) >> 8);    // send the high byte
+  Serial.write(int(value) & 0xFF);  // send the low byte
 }
 
-void loop() {
+long minSound = 10000;
+long maxSound = 0;
+long room_average = 0;
+long temp_average = 0;
+long temp_count = 0;
 
+void loop() {
+  if (fifty_ms_timer < millis())
+  {
+    int amplitude = maxSound - minSound;
+    //Serial.print(amplitude);
+    //Serial.print("\t");
+    //Serial.println(room_average);
+
+    minSound = 10000;
+    maxSound = 0;
+
+    temp_count++;
+    temp_average = addToAvg(amplitude, temp_average, temp_count);
+    fifty_ms_timer = millis() + FIFTY_MS;
+  }
+
+  if (avg_timer < millis())
+  {
+    
+    room_average = temp_average;
+
+    sendLong(room_average);
+
+    temp_average = 0;
+    temp_count = 0;
+    avg_timer = millis() + AVG_TIMER;
+  }
+
+  long soundLevel = analogRead(SOUND_SENSOR);
+
+  if (soundLevel < minSound) { minSound = soundLevel; }
+  if (soundLevel > maxSound) { maxSound = soundLevel; }
+  
+  /*
   if (one_second_timer < millis())
   {
     //Serial.print(millis()/1000);
@@ -93,5 +133,6 @@ void loop() {
   long sound_level = analogRead(SOUND_SENSOR);
   sound_level_per_sec_avg = addToAvg(sound_level, sound_level_per_sec_avg, sound_level_per_sec_count);
   delay(10);
+  */
   
 }
