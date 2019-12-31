@@ -11,6 +11,7 @@ For Computer Science 141 - Taught by Sergio Gago-Masague
 #define ON HIGH
 #define OFF LOW
 
+#define ONE_SECOND 1000
 #define AVG_TIMER 3000
 #define FIFTY_MS 50 
 #define FIFTEEN_SECONDS 15000
@@ -20,6 +21,7 @@ int max_level = 0;
 unsigned long avg_timer;
 unsigned long fifty_ms_timer;
 unsigned long fifteen_second_timer;
+unsigned long one_second_timer;
 
 long sound_level_per_sec_avg = 0;
 unsigned long sound_level_per_sec_count = 0;
@@ -56,12 +58,12 @@ long temp_average = 0;
 long temp_count = 0;
 
 void loop() {
-  if (fifty_ms_timer < millis())
+  /*if (fifty_ms_timer < millis())
   {
     int amplitude = maxSound - minSound;
-    //Serial.print(amplitude);
-    //Serial.print("\t");
-    //Serial.println(room_average);
+    Serial.print(amplitude);
+    Serial.print("\t");
+    Serial.println(room_average);
 
     minSound = 10000;
     maxSound = 0;
@@ -76,7 +78,7 @@ void loop() {
     
     room_average = temp_average;
 
-    sendLong(room_average);
+    //sendLong(room_average);
 
     temp_average = 0;
     temp_count = 0;
@@ -133,6 +135,8 @@ void loop() {
   long sound_level = analogRead(SOUND_SENSOR);
   sound_level_per_sec_avg = addToAvg(sound_level, sound_level_per_sec_avg, sound_level_per_sec_count);
   delay(10);
-  */
   
+  */
+  Serial.println(analogRead(SOUND_SENSOR));
+  delay(10);
 }

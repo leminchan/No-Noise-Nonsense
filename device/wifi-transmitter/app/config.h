@@ -1,12 +1,5 @@
 // Physical device information for board and sensor
 #define DEVICE_ID "SparkFun ESP8266 Thing Dev"
-#define DHT_TYPE DHT22
-
-// Pin layout configuration
-#define LED_PIN 5
-#define DHT_PIN 12
-
-#define TEMPERATURE_ALERT 200
 
 // Interval time(ms) for sending message to IoT Hub
 #define INTERVAL 3000
