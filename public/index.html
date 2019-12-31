@@ -1,0 +1,43 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/chart-device-data.js" type="text/javascript" charset="utf-8"></script>
+    <link href="css/style.css" rel="stylesheet" />
+
+    <title>No Noise Nonsense</title>
+</head>
+
+<body>
+    <div class="header">
+        <a href="#default" class="title">No Noise Nonsense</a>
+        <div class = "header-right">
+            <a class ="active" href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#github">Github</a>
+        </div>
+
+    </div>
+    <h2 class="flexHeader">
+       <span>Noise Levels Every Three Seconds</span>
+    </h2>
+    <div>
+        <canvas id="iotChart"></canvas>
+    </div>
+    <div>
+        <canvas id="barChart"></canvas>
+    </div>
+    
+       <span>
+            <span id="deviceCount">0 devices</span>
+            <select id="listOfDevices" class="select_box"></select>
+        </span>
+</body>
+
+</html>
